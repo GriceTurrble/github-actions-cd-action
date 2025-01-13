@@ -1,6 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "local>GriceTurrble/renovate-config"
-  ]
+  "extends": ["local>GriceTurrble/renovate-config"]
 }
