@@ -1,0 +1,21 @@
+# Run pre-commit autoupdate and create a pull request with any updates
+
+name: pre-commit autoupdate
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every Monday 11AM UTC (~6AM US/Eastern)
+    - cron: "0 11 * * 1"
+
+jobs:
+  update:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: griceturrble/precommit-autoupdate-action@v0
+        with:
+          create_as_draft: true
