@@ -1,0 +1,21 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      # Defaults (must rewrite)
+      - opened
+      - synchronize
+      - reopened
+      # Extra:
+      - ready_for_review
+
+jobs:
+  precommit:
+    name: Precommit checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: griceturrble/precommit-checks-action@v1
