@@ -36,7 +36,7 @@ runs:
           ${{ inputs.version_file }}
 
     - name: Get version
-      if: ${{ steps.changed-files-version.outputs.version_changed == 'true' }}
+      if: ${{ steps.changed-files-version.outputs.any_changed == 'true' }}
       id: get_version
       run: echo "version=$(cat ${{ inputs.version_file }})" >> $GITHUB_OUTPUT
       shell: bash
@@ -44,7 +44,7 @@ runs:
     # Creates our PATCH (vX.Y.Z) tag
     # Output from this is fed to the release action later
     - name: Tag release
-      if: ${{ steps.changed-files-version.outputs.version_changed == 'true' }}
+      if: ${{ steps.changed-files-version.outputs.any_changed == 'true' }}
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.2
       with:
@@ -53,7 +53,7 @@ runs:
 
     # Creates or updates our MAJOR (vX) and MINOR (vX.Y) tags
     - name: Create or update matching MAJOR, MINOR, and PATCH tags
-      if: ${{ steps.changed-files-version.outputs.version_changed == 'true' }}
+      if: ${{ steps.changed-files-version.outputs.any_changed == 'true' }}
       run: |
         version="${{ steps.get_version.outputs.version }}"
         a=(${version//./ })
@@ -70,7 +70,7 @@ runs:
       shell: bash
 
     - name: Create new GitHub release
-      if: ${{ steps.changed-files-version.outputs.version_changed == 'true' }}
+      if: ${{ steps.changed-files-version.outputs.any_changed == 'true' }}
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag_version.outputs.new_tag }}
