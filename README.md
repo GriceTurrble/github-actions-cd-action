@@ -53,13 +53,13 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      # Required in order to create releases and tags.
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
       - uses: griceturrble/github-actions-cd-action@v0
-        permissions:
-          # Required in order to create releases and tags.
-          contents: write
         with:
           # All arguments below are optional
           # and are shown with their default values:
