@@ -1,16 +1,3 @@
-# On updates to main branch, read the VERSION file in this repo. If that file has changed, create a new release and version tags.
-
-# Versions are expected in SemVer format, `MAJOR.MINOR.PATCH`
-# The HEAD commit is tagged with `v{MAJOR}`, `v{MAJOR}.{MINOR}`, and `v{MAJOR}.{MINOR}.{PATCH}` (the latter through a GH release).
-# Tags are force-pushed, replacing any existing with the same name.
-
-# In practice, a downstream workflow will target this repo in a few ways:
-# - `v{MAJOR}`: the workflow accepts all MINOR and PATCH updates automatically. No Dependabot PRs are generated unless the MAJOR version is changed.
-# - `v{MAJOR}.{MINOR}`: the workflow accepts all PATCH updates automatically. No Dependabot PRs are generated if only the PATCH version is changed.
-# - `v{MAJOR}.{MINOR}.{PATCH}`: the workflow accepts no updates automatically. Dependabot will generate update PRs for all changes.
-# We can also simply use the `main` branch (take all updates, make no Dependabot PRs) or a commit SHA (take no updates, potentially make Dependabot PRs for all changes).
-# Unless there are specific reasons to do otherwise, most workflows should target the `v{MAJOR}` tag.
-
 name: CD
 permissions: write-all
 on:
@@ -18,59 +5,12 @@ on:
     branches: [main]
 
 jobs:
-  changed_files:
-    name: "Grab changed files"
+  release:
+    permissions:
+      # Required in order to create releases and tags.
+      contents: write
     runs-on: ubuntu-latest
-    outputs:
-      version_changed: ${{ steps.changed-files-version.outputs.any_changed }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get specific changed files
-        id: changed-files-version
-        uses: tj-actions/changed-files@v45
-        with:
-          files: |
-            VERSION
-
-  release:
-    runs-on: ubuntu-latest
-    needs: changed_files
-    if: needs.changed_files.outputs.version_changed == 'true'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Get version
-        id: get_version
-        shell: bash
-        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
-
-      - name: Tag release
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
-          github_token: ${{ github.token }}
-          custom_tag: ${{ steps.get_version.outputs.version }}
-
-      - name: Move Major and Minor Version
-        shell: bash
-        run: |
-          version=$(cat VERSION)
-          a=(${version//./ })
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "GitHub Action"
-          git tag -fa v${a[0]} -m "Update v${a[0]} tag"
-          git push origin v${a[0]} --force
-          git tag -fa v${a[0]}.${a[1]} -m "Update v${a[0]}.${a[1]} tag"
-          git push origin v${a[0]}.${a[1]} --force
-
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-          generateReleaseNotes: true
+      # We're dogfooding ourselves: use the main branch for CD to avoid chasing tags
+      - uses: griceturrble/github-actions-cd-action@main
