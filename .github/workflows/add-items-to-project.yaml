@@ -1,0 +1,21 @@
+# Adds a newly-opened issue or pull request to a specified project board
+# This requires a Personal Access Token (PAT) with both the `repo` and `projects` scopes.
+# Save the PAT as an Actions secret called `ADD_TO_PROJECT_PAT`
+
+name: Add bugs to bugs project
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  add-to-project:
+    name: Add issue/PR to Project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/GriceTurrble/projects/2
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
