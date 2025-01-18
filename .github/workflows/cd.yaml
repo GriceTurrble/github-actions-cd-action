@@ -12,5 +12,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # We're dogfooding ourselves: use the main branch for CD to avoid chasing tags
+      # When dogfooding ourselves, target main branch to avoid chasing tags
       - uses: griceturrble/github-actions-cd-action@main
