@@ -16,6 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: griceturrble/precommit-autoupdate-action@v0
+      - uses: griceturrble/precommit-autoupdate-action@v1
         with:
           create_as_draft: true
