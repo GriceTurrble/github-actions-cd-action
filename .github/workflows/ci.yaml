@@ -5,12 +5,14 @@ on:
       - main
   pull_request:
     types:
-      # Defaults (must rewrite)
+      # Defaults
       - opened
       - synchronize
       - reopened
-      # Extra:
+      # Draft->ready
       - ready_for_review
+      # Edit the title or top comment
+      - edited
 
 jobs:
   precommit:
