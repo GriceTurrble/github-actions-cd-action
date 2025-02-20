@@ -5,8 +5,8 @@ name: pre-commit autoupdate
 on:
   workflow_dispatch:
   schedule:
-    # Every Mon,Wed,Fri 11AM UTC (~6AM US/Eastern)
-    - cron: "0 11 * * 1,3,5"
+    # Every Mon 11AM UTC (~6AM US/Eastern)
+    - cron: "0 11 * * 1"
 
 jobs:
   pre-commit-autoupdate:
