@@ -30,7 +30,7 @@ runs:
   steps:
     - name: Detect changed version file
       id: changed-files-version
-      uses: tj-actions/changed-files@v46
+      uses: tj-actions/changed-files@v47
       with:
         files: |
           ${{ inputs.version_file }}
