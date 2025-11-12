@@ -2,6 +2,7 @@
 import? 'common.just'
 
 # Show these help docs
+[default]
 help:
     @just --list --unsorted --justfile {{ source_file() }}
 
