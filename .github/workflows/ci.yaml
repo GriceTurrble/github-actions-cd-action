@@ -20,4 +20,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: griceturrble/precommit-checks-action@v2
+      - uses: griceturrble/precommit-checks-action@v3
