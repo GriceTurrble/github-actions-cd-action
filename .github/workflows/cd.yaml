@@ -11,6 +11,6 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       # When dogfooding ourselves, target main branch to avoid chasing tags
       - uses: griceturrble/github-actions-cd-action@main
