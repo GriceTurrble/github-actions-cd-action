@@ -57,9 +57,9 @@ jobs:
       # Required in order to create releases and tags.
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: griceturrble/github-actions-cd-action@v0
+      - uses: griceturrble/github-actions-cd-action@v1
         with:
           # All arguments below are optional
           # and are shown with their default values:
