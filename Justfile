@@ -11,7 +11,7 @@ help:
 sync-commons:
     rm common.just
     curl -H 'Cache-Control: no-cache, no-store' \
-        https://raw.githubusercontent.com/griceturrble/common-project-files/main/common.just?cachebust={{ uuid() }} > common.just
+        https://raw.githubusercontent.com/griceturrble/commons/main/common.just?cachebust={{ uuid() }} > common.just
 ### END COMMON ###
 
 # bootstrap the dev environment
