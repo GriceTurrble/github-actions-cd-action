@@ -9,7 +9,7 @@ help:
 # Pull latest common justfile recipes to local repo
 [group("commons")]
 sync-commons:
-    rm common.just
+    -rm common.just
     curl -H 'Cache-Control: no-cache, no-store' \
         https://raw.githubusercontent.com/griceturrble/commons/main/common.just?cachebust={{ uuid() }} > common.just
 ### END COMMON ###
